@@ -1,4 +1,4 @@
-package com.sovince.wordcount;
+package com.sovince.project;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -14,21 +14,21 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * Data: 2018/9/20
  * Time: 11:43
  */
-public class WordCountDriver {
+public class BrowserCountDriver {
 
     public static void main(String[] args) throws Exception{
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf,"wordcount000");
+        Job job = Job.getInstance(conf,"browserCount");
 
         //设置jar位置
-        job.setJarByClass(WordCountDriver.class);
+        job.setJarByClass(BrowserCountDriver.class);
 
         //设置mapper和reducer的位置
-        job.setMapperClass(WordCountMapper.class);
-        job.setReducerClass(WordCountReducer.class);
+        job.setMapperClass(BrowserCountMapper.class);
+        job.setReducerClass(BrowserCountReducer.class);
 
         //额外设置combiner
-        job.setCombinerClass(WordCountReducer.class);
+        job.setCombinerClass(BrowserCountReducer.class);
 
         //设置map阶段的输出
         job.setMapOutputKeyClass(Text.class);
@@ -39,8 +39,8 @@ public class WordCountDriver {
         job.setMapOutputValueClass(IntWritable.class);
 
         //设置数据来源的路径和结果的输出路径
-        Path input = new Path("hdfs://sw2.test.com:8020/mbp/input");
-        Path output = new Path("hdfs://sw2.test.com:8020/mbp/output");
+        Path input = new Path("/browserCount/input");
+        Path output = new Path("/browserCount/output");
         FileInputFormat.setInputPaths(job,input);
         FileOutputFormat.setOutputPath(job,output);
 
